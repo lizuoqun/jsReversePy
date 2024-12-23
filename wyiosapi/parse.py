@@ -16,7 +16,7 @@
 # https://curlconverter.com/# 复制curl直接生成python代码
 
 import requests
-# pyexecjs2
+# pip install pyexecjs2
 import execjs
 
 headers = {
