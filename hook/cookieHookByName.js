@@ -4,6 +4,7 @@
  * */
 
 (function () {
+  'use strict'
   let cookieTemp = '';
   Object.defineProperty(document, 'cookie', {
     // 在这里拦截设置的cookie值，拦截单个字符串v
