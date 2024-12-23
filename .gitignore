@@ -172,4 +172,19 @@ cython_debug/
 
 
 # javascrip libraries
-node_modules/
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+.scannerwork
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
