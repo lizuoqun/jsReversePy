@@ -11,7 +11,7 @@ document = window.document;
 navigator = window.navigator;
 
 // 通过事件拦截设置cookie的接口，看拦截住的位置是怎么设置的cookie的
-// 然后执行hook。再下一步debbugger，发现是在虚拟的JS当中实现的，全扣下来
+// 然后执行hook。再下一步debugger，发现是在虚拟的JS当中实现的，全扣下来
 // 通过jsdom来构建浏览器环境
 
 location = {
