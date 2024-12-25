@@ -15,3 +15,11 @@ https://wx.qmpsee.com/articleDetail?id=feef62bfdac45a94b9cd89aed5c235be
 ## spolicy
 
 请求当中添加了个静态参数，怎么获取请求体参数
+
+## xianyu
+
+请求当中加了认证签名sign，怎么破解签名来源
+
+## ShuMei
+
+获取验证码接口的rid再破解密码加密发送登录请求

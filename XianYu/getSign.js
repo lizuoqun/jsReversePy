@@ -1,11 +1,19 @@
-// k = i(d.token + '&' + j + '&' + h + '&' + c.data);
-
-// 这里的i也就是MD5加密
+/**
+ * @author: modify
+ * 1、通过sign:去搜关键字，看是在那一步给sign赋值的
+ * 2. k = i(d.token + '&' + j + '&' + h + '&' + c.data); 简答测试一下i是什么加密方式（或者直接把i函数全部拿出来）
+ * 3、分析值的来源
+ *    - d.token: cookie当中的_m_h5_tk前32位的值
+ *    - j: 时间戳
+ *    - h: 固定值'34839810' appKey
+ *    - c.data: 请求参数
+ * 4、封装js方法给py调用，或者直接把js代码改成py代码放在py里面调用
+ * */
 
 
 const h = '34839810';
 
-
+// 这里的i也就是MD5加密、常见的加密方法：MD5、SHA1、SHA256、SHA512，简单试一下，可以发现这是MD5加密
 function i(a) {
   function b(a, b) {
     return a << b | a >>> 32 - b;
@@ -177,9 +185,16 @@ function i(a) {
   return O.toLowerCase();
 }
 
-
 // console.log(i('1'));
 
+/**
+ * 给py调用加密得到sign
+ * @author: modify
+ * @param {string} token: cookie当中的_m_h5_tk的值
+ * @param {string} data: 请求参数
+ * @param {string} h: 固定值'34839810' appKey
+ * @return {object} {sign: 签名, time: 时间戳, mw: 加密前明文}
+ * */
 function getSign(token, data, h) {
   let j = (new Date).getTime();
   return {
