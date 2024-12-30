@@ -3,7 +3,7 @@
  * @author modify
  * */
 
-const noDebugger = Function.prototype.constructor;
+const noDebuggerByConstructor = Function.prototype.constructor;
 
 
 Function.prototype.constructor = function (e) {
@@ -12,5 +12,5 @@ Function.prototype.constructor = function (e) {
     };
   }
 
-  return noDebugger(e);
+  return noDebuggerByConstructor(e);
 };
