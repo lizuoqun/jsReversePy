@@ -5,8 +5,10 @@
 </head>
 <body>
 <h1 id="h1"></h1>
+<h2>别开F12</h2>
 </body>
 <script>
+  // 方案一
   const h1 = document.getElementById('h1');
 
   function test() {
@@ -16,6 +18,23 @@
   // 打个断点，noDebuggerBySetInterval.js 覆盖这个定时器
   setInterval(test, 100);
   h1.innerHTML = 'hello word';
+
+
+  // 方案二
+
+  setInterval(function () {
+
+    // 用fuckjs再混淆一遍
+    const startTime = performance.now();
+    // 设置断点
+    debugger;
+    const endTime = performance.now();
+    // 设置一个阈值，例如100毫秒
+    if (endTime - startTime > 100) {
+      alert('牢弟，你还调试上我的代码了？');
+      window.location.href = 'about:blank';
+    }
+  }, 100);
 
 </script>
 </html>
