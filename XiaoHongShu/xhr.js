@@ -1,4 +1,5 @@
-var request = require('request');
+const request = require('request');
+const fs = require('fs');
 
 var headers = {
   'accept': 'application/json, text/plain, */*',
@@ -34,7 +35,17 @@ var options = {
 
 function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
-    console.log(body);
+    body = JSON.parse(body);
+    console.log(body.code, '----', body.msg);
+    // console.log(body.data);
+
+    fs.writeFile('xhs.json', JSON.stringify(body.data.items), 'utf8', (err) => {
+      if (err) {
+        console.error('写入异常');
+        return console.log(err);
+      }
+      console.log('写入成功');
+    });
   }
 }
 
