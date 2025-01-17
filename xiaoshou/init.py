@@ -1,4 +1,5 @@
 import re
+import os
 from bs4 import BeautifulSoup
 import requests
 
@@ -44,24 +45,35 @@ result = [{'path': match[0], 'name': f'第{match[1]}章 {match[2]}'} for match i
 
 # print(result)
 
+# 确保目标目录存在，如果不存在则创建
+target_directory = 'books'
+if not os.path.exists(target_directory):
+    os.makedirs(target_directory)
 
 for item in result:
     path = item['path']
     name = item['name']
-    print(path + '------' + name)
+    url = 'https://www.bimige.net/bimi/106457/' + path + '.html'
+    print(path + '------' + name + '   ---    ' + url)
 
-    response = requests.get('https://www.bimige.net/bimi/106457/' + path + '.html', cookies=cookies,
+    response = requests.get(url, cookies=cookies,
                             headers=headers).text
 
-    print(response)
+    # print('response-------- ' + response)
 
-    soup = BeautifulSoup(response, "html.parser")
+    try:
+        soup = BeautifulSoup(response, "html.parser")
 
-    target_div = soup.find("div", {"id": "content", "deep": "3"})
+        target_div = soup.find("div", {"id": "content", "deep": "3"})
 
-    txt = target_div.text.replace("　　", "\n")
+        # print('target_div_text ------ ', target_div.text)
 
-    # 打开一个文件用于写入，如果文件不存在则创建它
-    with open('./books/' + name + '.txt', 'w', encoding='utf-8') as file:
-        # 将target_div的文本内容写入到文件中
-        file.write(txt)
+        txt = target_div.text.replace("　　", "\n")
+
+        file_path = os.path.join(target_directory, name + '.txt')
+        # 打开一个文件用于写入，如果文件不存在则创建它
+        with open(file_path, 'w', encoding='utf-8') as file:
+            # 将target_div的文本内容写入到文件中
+            file.write(txt)
+    except:
+        print('异常---' + name)

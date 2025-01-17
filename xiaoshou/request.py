@@ -4,8 +4,8 @@ import requests
 cookies = {
     '__51vcke__3KS4zHfAg9m3f4aZ': '912c6f77-6589-5d34-b303-3b7535abb3c2',
     '__51vuft__3KS4zHfAg9m3f4aZ': '1737081740534',
-    '__51uvsct__3KS4zHfAg9m3f4aZ': '2',
-    '__vtins__3KS4zHfAg9m3f4aZ': '%7B%22sid%22%3A%20%2254c8950e-1b89-5436-82d6-ab5d60a74f83%22%2C%20%22vd%22%3A%202%2C%20%22stt%22%3A%20367148%2C%20%22dr%22%3A%20367148%2C%20%22expires%22%3A%201737086952109%2C%20%22ct%22%3A%201737085152109%7D',
+    '__51uvsct__3KS4zHfAg9m3f4aZ': '3',
+    '__vtins__3KS4zHfAg9m3f4aZ': '%7B%22sid%22%3A%20%227ab6a61f-0bb2-5291-8313-49235ff253ee%22%2C%20%22vd%22%3A%204%2C%20%22stt%22%3A%201371499%2C%20%22dr%22%3A%2015203%2C%20%22expires%22%3A%201737096027589%2C%20%22ct%22%3A%201737094227589%7D',
 }
 
 headers = {
@@ -13,9 +13,9 @@ headers = {
     'Accept-Language': 'zh-CN,zh;q=0.9',
     'Cache-Control': 'max-age=0',
     'Connection': 'keep-alive',
-    # 'Cookie': '__51vcke__3KS4zHfAg9m3f4aZ=912c6f77-6589-5d34-b303-3b7535abb3c2; __51vuft__3KS4zHfAg9m3f4aZ=1737081740534; __51uvsct__3KS4zHfAg9m3f4aZ=2; __vtins__3KS4zHfAg9m3f4aZ=%7B%22sid%22%3A%20%2254c8950e-1b89-5436-82d6-ab5d60a74f83%22%2C%20%22vd%22%3A%202%2C%20%22stt%22%3A%20367148%2C%20%22dr%22%3A%20367148%2C%20%22expires%22%3A%201737086952109%2C%20%22ct%22%3A%201737085152109%7D',
-    'If-Modified-Since': 'Fri, 17 Jan 2025 02:49:41 GMT',
-    'If-None-Match': '"1737082181"',
+    # 'Cookie': '__51vcke__3KS4zHfAg9m3f4aZ=912c6f77-6589-5d34-b303-3b7535abb3c2; __51vuft__3KS4zHfAg9m3f4aZ=1737081740534; __51uvsct__3KS4zHfAg9m3f4aZ=3; __vtins__3KS4zHfAg9m3f4aZ=%7B%22sid%22%3A%20%227ab6a61f-0bb2-5291-8313-49235ff253ee%22%2C%20%22vd%22%3A%204%2C%20%22stt%22%3A%201371499%2C%20%22dr%22%3A%2015203%2C%20%22expires%22%3A%201737096027589%2C%20%22ct%22%3A%201737094227589%7D',
+    'If-Modified-Since': 'Fri, 17 Jan 2025 04:36:04 GMT',
+    'If-None-Match': '"1737088564"',
     'Referer': 'https://www.bimige.net/bimi/106457.html',
     'Sec-Fetch-Dest': 'document',
     'Sec-Fetch-Mode': 'navigate',
