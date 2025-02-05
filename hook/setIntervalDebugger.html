@@ -8,33 +8,67 @@
 <h2>别开F12</h2>
 </body>
 <script>
+
+  // 禁用鼠标右键事件
+  // document.oncontextmenu = function () {
+  //   return false;
+  // };
+
+  // 禁用F12快捷键
+  // document.onkeydown = function (e) {
+  //   if (e.keyCode === 123) {
+  //     return false;
+  //   }
+  // };
+
+
   // 方案一
-  const h1 = document.getElementById('h1');
-
-  function test() {
-    debugger
-  };
-
-  // 打个断点，noDebuggerBySetInterval.js 覆盖这个定时器
-  setInterval(test, 100);
-  h1.innerHTML = 'hello word';
+  // const h1 = document.getElementById('h1');
+  //
+  // function test() {
+  //   debugger
+  // };
+  //
+  // // 打个断点，noDebuggerBySetInterval.js 覆盖这个定时器
+  // setInterval(test, 100);
+  // h1.innerHTML = 'hello word';
 
 
   // 方案二
+  // setInterval(function () {
+  //   const startTime = performance.now();
+  //   debugger;
+  //   const endTime = performance.now();
+  //   if (endTime - startTime > 100) {
+  //     alert('牢弟，你还调试上我的代码了？');
+  //     window.location.href = 'about:blank';
+  //   }
+  // }, 100);
 
-  setInterval(function () {
 
-    // 用fuckjs再混淆一遍
-    const startTime = performance.now();
-    // 设置断点
-    debugger;
-    const endTime = performance.now();
-    // 设置一个阈值，例如100毫秒
-    if (endTime - startTime > 100) {
-      alert('牢弟，你还调试上我的代码了？');
-      window.location.href = 'about:blank';
-    }
-  }, 100);
+  // 修改构造器
+  // setInterval(function () {
+  //   check();
+  // }, 4000);
+  // const check = function () {
+  //   function doCheck(a) {
+  //     if (('' + a / a)['length'] !== 1 || a % 20 === 0) {
+  //       ;(function () {
+  //       }['constructor']('debugger')());
+  //     } else {
+  //       ;(function () {
+  //       }['constructor']('debugger')());
+  //     }
+  //     doCheck(++a);
+  //   }
+  //
+  //   try {
+  //     doCheck(0);
+  //   } catch (err) {
+  //   }
+  // };
+  // check();
+
 
 </script>
 </html>

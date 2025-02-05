@@ -1,5 +1,6 @@
 '''
 爬取csdn博客内容py脚本
+可以获取到需要关注才能查看的文章内容
 文章当中内容的图片还没能爬下来，后续实现
 '''
 
@@ -56,7 +57,9 @@ params = {
     'spm': '1001.2014.3001.5501',
 }
 
-name = '144499560'
+# name = '144499560'
+
+name = '122266697'
 
 response = requests.get(
     'https://blog.csdn.net/qq_44973159/article/details/' + name,
@@ -69,11 +72,10 @@ soup = BeautifulSoup(response, "html.parser")
 
 # print(soup)
 
-# 得到展示的div的内容
-target_div = soup.find("div", {"class": "blog-content-box"})
-
+# 文章标题
 title = soup.find("h1", {"id": "articleContentId"}).text
 
+# 得到展示的内容
 target_article = soup.find("article", {"class": "baidu_pl"})
 
 # print(target_article)
