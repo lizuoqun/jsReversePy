@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 
-const fileName = 'java.txt';
-const requestTime = 1000; // 请求间隔时间（毫秒）
-const repeatTime = 120000; // 重复执行的时间间隔（两分钟）
+const fileName = 'hyy.txt';
+const repeatTime = 10 * 1000; // 重复执行的时间间隔（两分钟）
+let count = 0; //访问了几次
 
 // 文件路径
 const filePath = path.join(__dirname, fileName);
@@ -39,7 +39,7 @@ function processUrls() {
     function requestUrls(index) {
       if (index >= stringArray.length) {
         // 所有请求完成后，等待两分钟再次执行
-        console.log('所有请求已完成，等待两分钟再次执行...');
+        console.log(`所有请求已完成，等待${repeatTime / 1000}秒再次执行...`);
         setTimeout(processUrls, repeatTime);
         return;
       }
@@ -47,7 +47,7 @@ function processUrls() {
       const url = stringArray[index].trim();
       if (url === '') {
         // 如果是空行，直接处理下一个URL
-        setTimeout(() => requestUrls(index + 1), requestTime);
+        requestUrls(index + 1);
         return;
       }
 
@@ -59,13 +59,14 @@ function processUrls() {
 
         // 数据接收完成
         res.on('end', () => {
-          console.log(`请求第 ${index + 1} 次，时间: ${getCurrentTime()}`, url);
+          count++;
+          console.log(`请求第 ${count} 次，时间: ${getCurrentTime()}`, url);
           // 等待1秒后处理下一个URL
-          setTimeout(() => requestUrls(index + 1), requestTime);
+          requestUrls(index + 1);
         });
       }).on('error', (err) => {
         console.error(`请求URL ${index + 1}: ${url} 时出错:`, err.message);
-        setTimeout(() => requestUrls(index + 1), requestTime);
+        requestUrls(index + 1);
       });
     }
 
