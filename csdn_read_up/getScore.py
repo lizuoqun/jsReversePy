@@ -112,12 +112,12 @@ class ArticleScores:
 if __name__ == '__main__':
     # TODO:调整为你自己的cookies，Referer，CSDNid, headers
     cookies = 'uuid_tt_dd=10'  # Simplified for brevity
-    # Referer = 'https://blog.csdn.net/qq_44973159?type=blog'
-    # CSDNid = 'qq_44973159'
-    # total = 480  # 已发文章总数量
-    Referer = 'https://blog.csdn.net/qq_45637260?type=blog'
-    CSDNid = 'qq_45637260'
-    total = 285
+    Referer = 'https://blog.csdn.net/qq_44973159?type=blog'
+    CSDNid = 'qq_44973159'
+    total = 480  # 已发文章总数量
+    # Referer = 'https://blog.csdn.net/qq_45637260?type=blog'
+    # CSDNid = 'qq_45637260'
+    # total = 285
     t_index = math.ceil(total / 100) + 1  # 向上取整，半闭半开区间，开区间+1。
     print(t_index)
     # 获取文章信息

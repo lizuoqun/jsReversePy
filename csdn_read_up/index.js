@@ -5,7 +5,7 @@ const https = require('https');
 const fileName = 'hyy.txt';
 const repeatTime = 10 * 1000; // 重复执行的时间间隔（两分钟）
 let count = 0; //访问了几次
-
+let requestCount = 0;
 // 文件路径
 const filePath = path.join(__dirname, fileName);
 
@@ -33,13 +33,18 @@ function processUrls() {
     const cleanedData = data.replace(/\r/g, '');
 
     // 将文件内容按行分割成字符串数组
-    const stringArray = cleanedData.split('\n');
+    let stringArray = cleanedData.split('\n');
+    stringArray = shuffleArray(stringArray);
+    stringArray = shuffleArray(stringArray);
+    stringArray = shuffleArray(stringArray);
+    console.log('文件内容：', stringArray.length);
 
     // 递归函数来按顺序请求URL
     function requestUrls(index) {
       if (index >= stringArray.length) {
         // 所有请求完成后，等待两分钟再次执行
-        console.log(`所有请求已完成，等待${repeatTime / 1000}秒再次执行...`);
+        requestCount++;
+        console.log(`所有请求已完成，等待${repeatTime / 1000}秒再次执行...，第${requestCount}次`);
         setTimeout(processUrls, repeatTime);
         return;
       }
@@ -60,8 +65,8 @@ function processUrls() {
         // 数据接收完成
         res.on('end', () => {
           count++;
-          console.log(`请求第 ${count} 次，时间: ${getCurrentTime()}`, url);
-          // 等待1秒后处理下一个URL
+          // console.log(`请求第 ${count} 次，时间: ${getCurrentTime()}`, url);
+          console.log(`end 请求第 ${count} 次`, url);
           requestUrls(index + 1);
         });
       }).on('error', (err) => {
@@ -73,6 +78,14 @@ function processUrls() {
     // 开始请求第一个URL
     requestUrls(0);
   });
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // 交换元素
+  }
+  return array;
 }
 
 // 开始处理URLs
