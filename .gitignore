@@ -188,5 +188,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.xlsx
 
 */books/*.txt

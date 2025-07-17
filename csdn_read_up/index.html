@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>URL 列表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        a {
+            display: block;
+            margin-bottom: 10px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>URL 列表</h1>
+<div id="urlList">加载中...</div>
+
+<script>
+  // 读取文本文件并解析 URL
+  async function loadUrls() {
+    try {
+      const response = await fetch('lzq.txt'); // 确保 lzq.txt 和 HTML 文件在同一目录
+      const text = await response.text();
+
+      // 使用正则表达式匹配所有 URL
+      const urlRegex = /https?:\/\/[^\s]+/g;
+      const urls = text.match(urlRegex) || [];
+
+      const container = document.getElementById('urlList');
+      container.innerHTML = ''; // 清空加载提示
+
+      if (urls.length === 0) {
+        container.innerText = '未找到任何 URL。';
+        return;
+      }
+      shuffleArray(urls);
+      urls.forEach(url => {
+        const link = document.createElement('a');
+        link.href = url;
+        link.textContent = url;
+        link.target = '_blank'; // 在新标签页打开
+        container.appendChild(link);
+      });
+    } catch (error) {
+      document.getElementById('urlList').innerText = '无法加载文件或解析 URL。';
+      console.error(error);
+    }
+  }
+
+  // Fisher-Yates 洗牌算法
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  // 自动点击链接并记录窗口对象
+  function autoClickLinks() {
+    const links = document.querySelectorAll('#urlList a');
+    let index = 0;
+    const openedWindows = [];
+
+    function clickNextLink() {
+      if (index < links.length) {
+        const link = links[index];
+        const newWindow = window.open(link.href, '_blank'); // 打开新窗口
+        openedWindows.push(newWindow);
+
+        // 5 秒后关闭窗口
+        setTimeout(() => {
+          if (newWindow && !newWindow.closed) {
+            newWindow.close();
+          }
+        }, 3000);
+
+        index++;
+        setTimeout(clickNextLink, 50); // 每隔三秒点击下一个链接
+      }
+    }
+
+    clickNextLink(); // 开始自动点击
+  }
+
+  // 页面加载时调用函数
+  window.onload = () => {
+    loadUrls().then(autoClickLinks); // 确保 URL 加载完成后再开始点击
+  };
+</script>
+</body>
+</html>

@@ -1,10 +1,10 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const https = require('https');
 
-const fileName = 'hyy.txt';
-const repeatTime = 10 * 1000; // 重复执行的时间间隔（两分钟）
-let count = 0; //访问了几次
+const fileName = 'lzq.txt';
+const repeatTime = 10 * 1000; // 重复执行的时间间隔（10秒）
+let count = 0; // 访问次数
 let requestCount = 0;
 // 文件路径
 const filePath = path.join(__dirname, fileName);
@@ -21,71 +21,61 @@ function getCurrentTime() {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-// 读取文件内容并处理URLs
-function processUrls() {
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('读取文件时出错:', err);
-      return;
-    }
-
-    // 去掉\r换行符
-    const cleanedData = data.replace(/\r/g, '');
-
-    // 将文件内容按行分割成字符串数组
-    let stringArray = cleanedData.split('\n');
-    stringArray = shuffleArray(stringArray);
-    stringArray = shuffleArray(stringArray);
-    stringArray = shuffleArray(stringArray);
-    console.log('文件内容：', stringArray.length);
-
-    // 递归函数来按顺序请求URL
-    function requestUrls(index) {
-      if (index >= stringArray.length) {
-        // 所有请求完成后，等待两分钟再次执行
-        requestCount++;
-        console.log(`所有请求已完成，等待${repeatTime / 1000}秒再次执行...，第${requestCount}次`);
-        setTimeout(processUrls, repeatTime);
-        return;
-      }
-
-      const url = stringArray[index].trim();
-      if (url === '') {
-        // 如果是空行，直接处理下一个URL
-        requestUrls(index + 1);
-        return;
-      }
-
-
-      https.get(url, (res) => {
-        // 数据块接收
-        res.on('data', () => {
-        });
-
-        // 数据接收完成
-        res.on('end', () => {
-          count++;
-          // console.log(`请求第 ${count} 次，时间: ${getCurrentTime()}`, url);
-          console.log(`end 请求第 ${count} 次`, url);
-          requestUrls(index + 1);
-        });
-      }).on('error', (err) => {
-        console.error(`请求URL ${index + 1}: ${url} 时出错:`, err.message);
-        requestUrls(index + 1);
-      });
-    }
-
-    // 开始请求第一个URL
-    requestUrls(0);
-  });
-}
-
+// 打乱数组顺序
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]]; // 交换元素
   }
   return array;
+}
+
+// 发送 HTTPS 请求
+function fetchUrl(url) {
+  return new Promise((resolve, reject) => {
+    const req = https.get(url, (res) => {
+      res.on('data', () => {
+      });
+      res.on('end', () => {
+        resolve();
+      });
+    });
+
+    req.on('error', (err) => {
+      reject(err);
+    });
+  });
+}
+
+// 处理 URLs
+async function processUrls() {
+  try {
+    const data = await fs.readFile(filePath, 'utf8');
+    // 去掉\r换行符
+    const cleanedData = data.replace(/\r/g, '');
+    // 将文件内容按行分割成字符串数组
+    let stringArray = cleanedData.split('\n').map(url => url.trim()).filter(url => url);
+    stringArray = shuffleArray(stringArray);
+    console.log('文件内容：', stringArray.length);
+
+    for (const url of stringArray) {
+      try {
+        await fetchUrl(url);
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        count++;
+        console.log(`请求第 ${count} 次，时间: ${getCurrentTime()}`, url);
+      } catch (err) {
+        console.error(`请求URL ${url} 时出错:`, err.message);
+      }
+    }
+
+    requestCount++;
+    console.log(`所有请求已完成，等待${repeatTime / 1000}秒再次执行...，第${requestCount}次`);
+    setTimeout(processUrls, repeatTime);
+  } catch (err) {
+    console.error('读取文件时出错:', err);
+    setTimeout(processUrls, repeatTime);
+  }
 }
 
 // 开始处理URLs
