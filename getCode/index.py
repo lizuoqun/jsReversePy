@@ -156,10 +156,39 @@ def submit_verification_manual(svg_filename, mobile):
         return None
 
 
+import requests
+import json
+
+
+def get_telephone_info(telephone):
+    # 接口URL
+    url = "https://api4.wincheers.net/api/services/app/crmBuyer/GetTelePhone"
+
+    # 请求参数
+    data = {
+        "Telephone": telephone
+    }
+
+    # 请求头
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    # 发送POST请求
+    response = requests.post(url, json=data, headers=headers)
+
+    # 打印输出响应结果
+    print("响应结果:")
+    print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+
+    return response.json()
+
+
 # 主函数
 def main():
     # 第一步：获取验证码SVG
     for mobile in mobileList:
+        get_telephone_info(mobile)
         svg_filename, svg_content = get_captcha_svg(mobile)
         if not svg_filename:
             return
