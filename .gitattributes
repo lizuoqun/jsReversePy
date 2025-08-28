@@ -1,0 +1,21 @@
+# 忽略所有 .js 文件的语言统计
+*.js linguist-language=none
+
+# 或者更具体地，只忽略某些 JS 文件（可选）
+# *.min.js linguist-language=none
+# test/*.js linguist-language=none
+
+# 忽略整个 dist/ 目录
+dist/** linguist-vendored
+
+# 忽略测试文件
+test/** linguist-generated
+
+# 忽略打包文件
+*.min.js linguist-vendored
+
+# 强制某些文件算作某种语言 vue->js
+*.vue linguist-language=JavaScript
+
+# git attributes 语法说明
+# https://git-scm.com/docs/gitattributes
