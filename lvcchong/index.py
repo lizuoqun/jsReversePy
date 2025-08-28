@@ -37,7 +37,6 @@ headers = {
     "Sec-Fetch-Site": "cross-site",
     "Sec-Fetch-Mode": "cors",
     "Sec-Fetch-Dest": "empty",
-    "Referer": "https://servicewechat.com/wx5f5a0ce815d4a54c/5/page-frame.html",
     # "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "zh-CN,zh;q=0.9"
 }
