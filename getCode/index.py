@@ -1,10 +1,12 @@
+import json
+
 import requests
 import time
 import os
 import platform
 import subprocess
 
-mobileList = ['13924532004', '13326702020']
+mobileList = []
 
 
 # 第一步：请求获取SVG验证码
@@ -121,8 +123,6 @@ def submit_verification_manual(svg_filename, mobile):
 
     try:
         # 提示用户手动输入验证码
-        print(f"\n验证码图片已打开，请查看并输入验证码")
-        print("如果图片未自动打开，请手动打开文件查看验证码")
         code = input("请输入验证码: ")
         code = code.strip()
 
@@ -154,10 +154,6 @@ def submit_verification_manual(svg_filename, mobile):
     except Exception as e:
         print(f"第二步请求失败: {str(e)}")
         return None
-
-
-import requests
-import json
 
 
 def get_telephone_info(telephone):
